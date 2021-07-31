@@ -32,18 +32,22 @@ def huffman_encoding(data):
         container[char] = container.get(char, 0) + 1
     
     # loop for the huffman tree
-    while len(container) > 1:
-        # pop the 2 lowest value elements and create a tree with the sum of their value and the elements as children
-        mi=min(container,key = lambda key: container[key])
-        left_child = (mi,container.pop(mi))
-        mi=min(container,key = lambda key: container[key])
-        right_child = (mi,container.pop(mi))
+    if len(container)==1:
+        tree=(next(iter(container)),container[next(iter(container))])
         
-        value = right_child[1] + left_child[1]
-        tree = Tree(value)
-        tree.set_right_child(right_child)
-        tree.set_left_child(left_child)
-        container[tree]=tree.get_head_value()
+    else:
+        while len(container) > 1:
+            # pop the 2 lowest value elements and create a tree with the sum of their value and the elements as children
+            mi=min(container,key = lambda key: container[key])
+            left_child = (mi,container.pop(mi))
+            mi=min(container,key = lambda key: container[key])
+            right_child = (mi,container.pop(mi))
+            
+            value = right_child[1] + left_child[1]
+            tree = Tree(value)
+            tree.set_right_child(right_child)
+            tree.set_left_child(left_child)
+            container[tree]=tree.get_head_value()
     
     def huffman_code(tree): # traverse the tree to get the code for every char
         
@@ -51,7 +55,6 @@ def huffman_encoding(data):
         stri = ""
 
         def traverse(tree, stri):
-            
             if type(tree) == tuple:
                 if type(tree[0])==str:
                     code_dict[tree[0]] = stri
@@ -65,7 +68,7 @@ def huffman_encoding(data):
                 traverse(tree.get_left_child(), stri+'0')
                 traverse(tree.get_right_child(), stri+'1')
             return code_dict
-
+        
         traverse(tree, stri)
         code_string = ''
         for char in data:
@@ -76,7 +79,7 @@ def huffman_encoding(data):
         return binary_code
 
     binary_code = huffman_code(tree)
-    
+    print(binary_code)
     return binary_code, tree
 
 def huffman_decoding(data, tree):
@@ -118,7 +121,8 @@ def huffman_decoding(data, tree):
 if __name__ == "__main__":
     codes = {}
 
-    a_great_sentence = '''567'''
+    a_great_sentence = '''Data conversion have always been widely used utility and one among them can be
+    conversion of a string to it’s binary equivalent. Let’s discuss certain ways in which this can be done.'''
 
     print("The size of the data is: {}\n".format(
         sys.getsizeof(a_great_sentence)))
