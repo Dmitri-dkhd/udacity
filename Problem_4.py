@@ -32,4 +32,7 @@ def is_user_in_group(user, group):
 	 		if is_user_in_group(user,element):
 	 			return True
 	 return False
-print(is_user_in_group("sub_child_user",parent))
+
+print(is_user_in_group("sub_child_user",parent)) #returns True
+print(is_user_in_group(None,parent)) #returns False
+print(is_user_in_group(sub_child,parent)) #returns False
