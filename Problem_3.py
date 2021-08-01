@@ -77,8 +77,7 @@ def huffman_encoding(data):
         traverse(tree, stri)
         code_string = ''
         for char in data:
-            if char in code_dict:
-                code_string += code_dict[char]
+            code_string += code_dict[char]
 
         binary_code = format(int(code_string, base=2), f'0{len(code_string)}b')
         return binary_code
