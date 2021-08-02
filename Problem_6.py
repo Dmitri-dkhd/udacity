@@ -1,4 +1,4 @@
-class Node:
+class Node: #old
     def __init__(self, value):
         self.value = value
         self.next = None
